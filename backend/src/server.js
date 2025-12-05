@@ -10,9 +10,9 @@ app.get("/hello", (req, res) => {
 });
 if(ENV.NODE_ENV === "Production")
 {
-  app.use(express.static(path.join(__dirname,"../Front-end/dist")));
+  app.use(express.static(path.join(__dirname,"../frontend/dist")));
   app.get("/{*any}",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../Front-end","dist","index.html" ))
+    res.sendFile(path.join(__dirname,"../frontend","dist","index.html" ))
   })
 }
 app.listen(ENV.PORT,()=>console.log("server is runnig"));
