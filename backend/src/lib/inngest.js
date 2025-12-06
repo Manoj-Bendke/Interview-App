@@ -9,13 +9,13 @@ export const inngest = new Inngest({ id: "interview-App", isDev : false });
   { event: "clerk/user.created" },
   async ({ event }) => {
     await dbConnect();
-    const { id, email_addresses, last_name, first_name, imgae_url } =
+    const { id, email_addresses, last_name, first_name, image_url } =
       event.data;
     const newUser = {
       id: id,
       email: email_addresses[0]?.email_address,
       name: `${first_name || ""} ${last_name || ""}`,
-      profileImage: imgae_url,
+      profileImage: image_url.toString(),
     };
     await User.create(newUser);
   }
