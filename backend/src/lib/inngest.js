@@ -2,7 +2,7 @@ import {Inngest} from "inngest";
 import { dbConnect } from "./db.js";
 import { User } from "../models/Users.js";
 
-export const inngest = new Inngest({ id: "interview-App" });
+export const inngest = new Inngest({ id: "interview-App", isDev : false });
 
  const syncUser = inngest.createFunction(
   { id: "syncUser" },
