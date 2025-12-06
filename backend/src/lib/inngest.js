@@ -1,11 +1,11 @@
-import inngest from "inngest";
+import {Inngest} from "inngest";
 import { dbConnect } from "./db.js";
 import { User } from "../models/Users.js";
 
-export const inngest = new inngest({ id: "interview-App" });
+export const inngest = new Inngest({ id: "interview-App" });
 
-export const syncUser = inngest.createFunction(
-  { id: "sync-user" },
+ const syncUser = inngest.createFunction(
+  { id: "syncUser" },
   { event: "clerk/user.created" },
   async ({ event }) => {
     await dbConnect();
@@ -20,8 +20,8 @@ export const syncUser = inngest.createFunction(
     await User.create(newUser);
   }
 );
-export const deleteUser = inngest.createFunction(
-  { id: "sync-user" },
+ const deleteUser = inngest.createFunction(
+  { id: "deleteUser" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
     await dbConnect();
@@ -29,3 +29,5 @@ export const deleteUser = inngest.createFunction(
     await User.deleteOne({ clerkId: id });
   }
 );
+
+export  const functions = [syncUser,deleteUser]
