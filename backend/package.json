@@ -18,6 +18,7 @@
     "inngest": "^3.44.3",
     "interview-app": "file:..",
     "mongoose": "^9.0.0",
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.11",
+    "stream-chat": "^9.26.1"
   }
 }

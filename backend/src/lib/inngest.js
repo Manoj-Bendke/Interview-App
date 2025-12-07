@@ -1,10 +1,11 @@
-import {Inngest} from "inngest";
+import { Inngest } from "inngest";
 import { dbConnect } from "./db.js";
 import { User } from "../models/Users.js";
+import { deleteStreamUser, upsertStreamUser } from "./stream.js";
 
-export const inngest = new Inngest({ id: "interview-App", isDev : false });
+export const inngest = new Inngest({ id: "interview-App", isDev: false });
 
- const syncUser = inngest.createFunction(
+const syncUser = inngest.createFunction(
   { id: "syncUser" },
   { event: "clerk/user.created" },
   async ({ event }) => {
@@ -18,16 +19,22 @@ export const inngest = new Inngest({ id: "interview-App", isDev : false });
       profileImage: image_url.toString(),
     };
     await User.create(newUser);
+    await upsertStreamUser({
+      id: newUser.clerkId.toString(),
+      name: newUser.name,
+      image: newUser.profileImage,
+    });
   }
 );
- const deleteUser = inngest.createFunction(
+const deleteUser = inngest.createFunction(
   { id: "deleteUser" },
   { event: "clerk/user.deleted" },
   async ({ event }) => {
     await dbConnect();
     const { id } = event.data;
     await User.deleteOne({ clerkId: id });
+    await deleteStreamUser(id.toString());
   }
 );
 
-export  const functions = [syncUser,deleteUser]
+export const functions = [syncUser, deleteUser];
