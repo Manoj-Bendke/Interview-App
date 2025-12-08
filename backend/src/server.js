@@ -7,7 +7,7 @@ import { serve } from "inngest/express";
 import { functions, inngest } from "../src/lib/inngest.js";
 import { clerkMiddleware } from '@clerk/express'
 import { protectRoute } from "./middleware/protectRoute.js";
-import chatRoutes from "./routes/chatRoutes.js";
+import {chatRoutes} from "./routes/chatRoutes.js";
 
 const app = express();
 
@@ -24,14 +24,16 @@ app.use('/api/chat',protectRoute, chatRoutes)
 const __dirname = path.resolve();
 
 app.get("/hello",protectRoute,(req, res) => { 
-  res.status(200).json({ message: "Success" });
+  res.status(200).json({ message: "Success, you have successfully logged in" });
 });
+
 if (ENV.NODE_ENV === "Production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("/{*any}", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
   });
 }
+
 const startServer = async () => {
   try {
     await dbConnect();
