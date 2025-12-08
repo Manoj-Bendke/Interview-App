@@ -85,9 +85,15 @@ export async function joinSession(req, res) {
     if (!session) {
       return res.status(401).json({ error: "Session not found" });
     }
-
+    
+    if(session.status !== "active"){
+      return res.status(400).json({error:"cannot join a completed session"})
+    }
+    if(session.host.toString()===userId.toString()){
+      return res.status(400).json({error:"Host Cannot join their own session as partcipant"})
+    }
     if (session.participant) {
-      return res.status(404).json({ message: "The room is full" });
+      return res.status(409).json({ message: "The room is full" });
     }
 
     session.participant = userId;
