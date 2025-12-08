@@ -28,12 +28,12 @@ export async function createSession(req, res) {
         custom: { problem, difficulty, sessionId: session._id.toString() },
       },
     });
-    const channle = chatClient.channel("messaging", callId, {
+    const channel = chatClient.channel("messaging", callId, {
       name: `${problem}Session`,
       created_by_id: clerkId,
       members: [clerkId],
     });
-    await channle.create();
+    await channel.create();
     res.status(201).json({ session });
   } catch (error) {
     return res.status(500).json({ error: "Internal error" });
@@ -83,7 +83,7 @@ export async function joinSession(req, res) {
     const session = await Session.findById(id);
 
     if (!session) {
-      return res.status(401).json({ error: "Session not found" });
+      return res.status(404).json({ error: "Session not found" });
     }
     
     if(session.status !== "active"){
@@ -97,7 +97,7 @@ export async function joinSession(req, res) {
     }
 
     session.participant = userId;
-    session.save();
+    await session.save();
 
     const channel = chatClient.channel("messaging", session.callId);
     await channel.addMembers([clerkId]);
