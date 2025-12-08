@@ -15,7 +15,7 @@ export const protectRoute = [
       req.user = user;
       next();
     } catch (error) {
-      res.status(400).json({error:"something went wrong with the authorization",error})
+      res.status(400).json({error:"something went wrong with the authorization"})
     }
   },
 ];
