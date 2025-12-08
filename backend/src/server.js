@@ -19,7 +19,7 @@ app.use(clerkMiddleware())
 
 app.use("/api/inngest", serve({ client: inngest, functions}));
  
-app.use('/api/chat',protectRoute, chatRoutes)
+app.use('/api/chat',protectRoute,chatRoutes)
 
 const __dirname = path.resolve();
 
