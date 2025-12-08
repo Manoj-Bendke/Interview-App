@@ -7,7 +7,7 @@ import { serve } from "inngest/express";
 import { functions, inngest } from "../src/lib/inngest.js";
 import { clerkMiddleware } from '@clerk/express'
 import { protectRoute } from "./middleware/protectRoute.js";
-import {chatRoutes} from "./routes/chatRoutes.js";
+// import {chatRoutes} from "./routes/chatRoutes.js";
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use(clerkMiddleware())
 
 app.use("/api/inngest", serve({ client: inngest, functions}));
  
-app.use('/api/chat',protectRoute, chatRoutes)
+app.use('/api/chat',protectRoute)
 
 const __dirname = path.resolve();
 
