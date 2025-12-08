@@ -1,5 +1,4 @@
 import express from 'express';
-import {protectRoute} from '../middleware/protectRoute.js'
 import { createSession, endSession, getActiveSession, getMyTRecentSession, getSessionByID, joinSession } from '../controllers/sessionController.js';
 const router = express.Router();
 router.post('/',createSession )
