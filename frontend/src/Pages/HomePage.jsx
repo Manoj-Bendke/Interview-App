@@ -1,7 +1,7 @@
   import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton,useUser } from "@clerk/clerk-react";
   import {toast} from "react-hot-toast";
   function HomePage(){
-    const isSignedIn = useUser();
+    const {isSignedIn} = useUser();
     return(
       <>
       <h1>Hii Welcome to the app</h1>
